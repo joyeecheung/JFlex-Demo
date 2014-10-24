@@ -10,4 +10,4 @@ ISBN.java: isbn.flex
 	jflex isbn.flex
 
 clean:
-	rm -rf *.class *~ *.java
+	rm -rf *.class *~ ISBN.java
