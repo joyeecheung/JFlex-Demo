@@ -1,7 +1,10 @@
-all: run
+all: sample.out
 
-run: ISBN.class
-	java ISBN sample.in
+test: sample.out
+	pr -m -t sample.in sample.out
+
+sample.out: ISBN.class
+	java ISBN sample.in > sample.out
 
 ISBN.class: ISBN.java
 	javac ISBN.java
@@ -11,3 +14,5 @@ ISBN.java: isbn.flex
 
 clean:
 	rm -rf *.class *~ ISBN.java
+
+.PHONY: test
