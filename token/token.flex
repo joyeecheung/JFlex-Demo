@@ -8,7 +8,7 @@ DIGIT=[0-9]
 
 FILENAME=\<.*\>
 ID=[A-Za-z_]({ALPHA}|{DIGIT}|_)*
-FUNCTION={ID}\(\)
+FUNCTION={ID}\(({ID}|\ |,)*\)
 
 WHITE_SPACE_CHAR=[\\n\\r\\ \\t\\b\\012]
 STRING_TEXT=(\\\"|[^\n\r\"]|\\{WHITE_SPACE_CHAR}+\\)*

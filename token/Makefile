@@ -1,4 +1,4 @@
-all: test
+all: output.txt
 
 test: output.txt
 	grep -e "match:" -e "(Text:" output.txt > output
@@ -18,3 +18,5 @@ Yylex.java: token.flex
 clean:
 	rm -f Yylex.java output.txt *.class *~
 	rm -f output.txt output
+
+.PHONY: test
