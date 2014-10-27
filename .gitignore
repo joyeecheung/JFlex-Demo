@@ -3,3 +3,5 @@ examples
 *~
 ISBN.java
 *.out
+output*
+token/*.java

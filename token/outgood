@@ -1,0 +1,121 @@
+match: --#include--
+(Text: #include    index : 1)
+match: -- --
+match: --<stdio.h>--
+(Text: <stdio.h>    index : 2)
+match: --
+match: --
+match: --int--
+(Text: int    index : 19)
+match: -- --
+match: --main()--
+(Text: main()    index : 3)
+match: -- --
+match: --{--
+(Text: {    index : 8)
+match: --
+match: --	--
+match: --int--
+(Text: int    index : 19)
+match: -- --
+match: --a--
+(Text: a    index : 24)
+match: -- --
+match: --=--
+(Text: =    index : 18)
+match: -- --
+match: --1--
+(Text: 1    index : 23)
+match: --;--
+(Text: ;    index : 7)
+match: -- --
+match: --
+match: --	--
+match: --int--
+(Text: int    index : 19)
+match: -- --
+match: --b--
+(Text: b    index : 24)
+match: -- --
+match: --=--
+(Text: =    index : 18)
+match: -- --
+match: --2--
+(Text: 2    index : 23)
+match: --;--
+(Text: ;    index : 7)
+match: --
+match: --	--
+match: --int--
+(Text: int    index : 19)
+match: -- --
+match: --c--
+(Text: c    index : 24)
+match: -- --
+match: --=--
+(Text: =    index : 18)
+match: -- --
+match: --a--
+(Text: a    index : 24)
+match: -- --
+match: --+--
+(Text: +    index : 10)
+match: -- --
+match: --b--
+(Text: b    index : 24)
+match: --;--
+(Text: ;    index : 7)
+match: --
+match: --	--
+match: --
+match: --	--
+match: --if--
+(Text: if    index : 21)
+match: -- --
+match: --(--
+(Text: (    index : 12)
+match: --c--
+(Text: c    index : 24)
+match: -- --
+match: --<--
+(Text: <    index : 16)
+match: -- --
+match: --0--
+(Text: 0    index : 23)
+match: --)--
+(Text: )    index : 13)
+match: -- --
+match: --{--
+(Text: {    index : 8)
+match: --
+match: --		--
+match: --c--
+(Text: c    index : 24)
+match: -- --
+match: --=--
+(Text: =    index : 18)
+match: -- --
+match: -----
+(Text: -    index : 11)
+match: --c--
+(Text: c    index : 24)
+match: --;--
+(Text: ;    index : 7)
+match: --
+match: --	--
+match: --}--
+(Text: }    index : 9)
+match: --
+match: --
+match: --	--
+match: --return--
+(Text: return    index : 22)
+match: -- --
+match: --c--
+(Text: c    index : 24)
+match: --;--
+(Text: ;    index : 7)
+match: --
+match: --}--
+(Text: }    index : 9)
+match: --
