@@ -9,7 +9,7 @@ class ISBNMapper {
     private boolean isValid; // if this ISBN is valid
     private int type; // 10 or 13
     private int[] digits; // digits in the original string
-    private int[] groups; // group of numbers in the original string
+    private String[] groups; // group of numbers in the original string
                           // x will be converted to 10
     private final static int GROUP_NUM = 4;
     private final static int ISBN13_LEN = 13 + 4;
@@ -64,14 +64,14 @@ class ISBNMapper {
                 return;
             }
 
-            groups = new int[GROUP_NUM];
+            groups = new String[GROUP_NUM];
             for (int i = 0; i < GROUP_NUM - 1; ++i)
-                groups[i] = Integer.parseInt(matcher.group(i + 1)
-                        .replace(" ", "").replace("-", ""));
-            groups[3] = checksum;
+                groups[i] = matcher.group(i + 1)
+                        .replace(" ", "").replace("-", "");
+            groups[3] = raw.substring(raw.length() - 1);
 
-            language = groups[0];
-            publisher = groups[1];
+            language = Integer.parseInt(groups[0]);
+            publisher = Integer.parseInt(groups[1]);
             isValid = true;
         } else {
             isValid = false;
@@ -88,9 +88,9 @@ class ISBNMapper {
         }
     }
 
-    public int getPublisher() {
-        if (!isValid) return -1;
-        return publisher;
+    public String getPublisher() {
+        if (!isValid) return null;
+        return groups[1];
     }
 
     public boolean isValid() {
@@ -128,8 +128,8 @@ ISBN=(97[89][\- ])?({DIGIT}+[\- ]){3}(x|X|{DIGIT})
 ANYTHING=[^\r\n]+
 
 %%
-^{ISBN}$  {
-    ISBNMapper mapper = new ISBNMapper(yytext());
+^{ISBN}$ {
+    ISBNMapper mapper = new ISBNMapper(yytext().replace("\n", ""));
     if (mapper.isValid()) {
         System.out.println(mapper.getCountry() + " " + mapper.getPublisher());
     } else {
@@ -139,5 +139,6 @@ ANYTHING=[^\r\n]+
 
 {ANYTHING}$ { System.out.println("Error"); }
 ^{ANYTHING}$ { System.out.println("Error"); }
+\n\n { System.out.println(""); }
 . { /* skip */ }
 \n { /* skip */ }

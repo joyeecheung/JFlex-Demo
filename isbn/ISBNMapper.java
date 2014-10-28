@@ -3,7 +3,7 @@ package isbn;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ISBNMapper {
+class ISBNMapper {
     private int language; // language code
     private int publisher; // publisher code
     private int checksum; // original checksum code, x will be converted to 10
@@ -11,7 +11,7 @@ public class ISBNMapper {
     private boolean isValid; // if this ISBN is valid
     private int type; // 10 or 13
     private int[] digits; // digits in the original string
-    private int[] groups; // group of numbers in the original string
+    private String[] groups; // group of numbers in the original string
                           // x will be converted to 10
     private final static int GROUP_NUM = 4;
     private final static int ISBN13_LEN = 13 + 4;
@@ -66,14 +66,14 @@ public class ISBNMapper {
                 return;
             }
 
-            groups = new int[GROUP_NUM];
+            groups = new String[GROUP_NUM];
             for (int i = 0; i < GROUP_NUM - 1; ++i)
-                groups[i] = Integer.parseInt(matcher.group(i + 1)
-                        .replace(" ", "").replace("-", ""));
-            groups[3] = checksum;
+                groups[i] = matcher.group(i + 1)
+                        .replace(" ", "").replace("-", "");
+            groups[3] = raw.substring(raw.length() - 1);
 
-            language = groups[0];
-            publisher = groups[1];
+            language = Integer.parseInt(groups[0]);
+            publisher = Integer.parseInt(groups[1]);
             isValid = true;
         } else {
             isValid = false;
@@ -90,9 +90,9 @@ public class ISBNMapper {
         }
     }
 
-    public int getPublisher() {
-        if (!isValid) return -1;
-        return publisher;
+    public String getPublisher() {
+        if (!isValid) return null;
+        return groups[1];
     }
 
     public boolean isValid() {
@@ -121,10 +121,10 @@ public class ISBNMapper {
         String cases[] = { "978 0 571 08989 5", "978 5 571 08989 5",
                 "978-7-302-07800-5", "978-9 861-03085 2", "987-1-2-3",
                 "0-596-52831-0", "9bcasdasdlkas", "978-0-11-000222-4",
-                "1-58488-540-8" };
+                "1-58488-540-8", "978-0-08-047655-1" };
         String[] expected = { "English 571", "Error", "Chinese 302",
                 "Other 861", "Error", "English 596", "Error", "English 11",
-                "Other 58488" };
+                "Other 58488", "English 08" };
         for (int i = 0; i < cases.length; ++i) {
             ISBNMapper mapper = new ISBNMapper(cases[i]);
             String actual;
@@ -143,3 +143,4 @@ public class ISBNMapper {
         }
     }
 }
+
