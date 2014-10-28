@@ -124,7 +124,7 @@ class ISBNMapper {
 %int
 
 DIGIT=[0-9]
-ISBN=(97[89][\- ])?({DIGIT}+[\- ]){3}(X|{DIGIT})
+ISBN=(97[89][\- ])?({DIGIT}+[\- ]){3}(x|X|{DIGIT})
 ANYTHING=[^\r\n]+
 
 %%
