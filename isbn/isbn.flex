@@ -125,9 +125,10 @@ class ISBNMapper {
 
 DIGIT=[0-9]
 ISBN=(97[89][\- ])?({DIGIT}+[\- ]){3}(X|{DIGIT})
+ANYTHING=[^\r\n]+
 
 %%
-{ISBN}  {
+^{ISBN}$  {
     ISBNMapper mapper = new ISBNMapper(yytext());
     if (mapper.isValid()) {
         System.out.println(mapper.getCountry() + " " + mapper.getPublisher());
@@ -136,6 +137,7 @@ ISBN=(97[89][\- ])?({DIGIT}+[\- ]){3}(X|{DIGIT})
     }
 }
 
-.$ { System.out.println("Error"); }
+{ANYTHING}$ { System.out.println("Error"); }
+^{ANYTHING}$ { System.out.println("Error"); }
 . { /* skip */ }
 \n { /* skip */ }
