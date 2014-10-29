@@ -1,11 +1,17 @@
 all: output.txt
 
-test: output.txt
-	grep -e "match:" -e "(Text:" output.txt > output
-	diff output outgood
+test: apple
+	grep -e "match:" -e "(Text:" apple > apple.out
 
-output.txt: Yylex.class test.txt
-	java Yylex test.txt > output.txt
+apple: Yylex.class apple.c
+	java Yylex apple.c > apple
+
+# test: output.txt
+# 	grep -e "match:" -e "(Text:" output.txt > output
+# 	diff output outgood
+
+# output.txt: Yylex.class test.txt
+# 	java Yylex test.txt > output.txt
 
 Yylex.class: Yylex.java Yytoken.java
 
