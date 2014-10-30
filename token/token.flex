@@ -8,17 +8,16 @@ INCLUDE=\#include
 ALPHA=[A-Za-z]
 DIGIT=[0-9]
 
-FILENAME=\<.*\>
-ID=[A-Za-z_]({ALPHA}|{DIGIT}|_)*
-STRING_TEXT=(\\\"|[^\n\r\"]|\\{WHITE_SPACE_CHAR}+\\)*
-FUNCTION={ID}
-
 WHITE_SPACE_CHAR=[\\n\\r\\ \\t\\b\\012]
-
-NUMBER=DIGIT+
+STRING_TEXT=(\\\"|[^\n\r\"]|\\{WHITE_SPACE_CHAR}+\\)*
 WHITE_SPACE=[\ \t\b\f]+|\r\n|\n
 
-%x FUNC
+FILENAME=\<[^\>]+\>
+ID=[A-Za-z_]({ALPHA}|{DIGIT}|_)*
+FUNCTION={ID}\(
+NUMBER=DIGIT+
+
+%x FUNC INC
 %{
   private Stack<String> func = new Stack<String>();
   private int parenthese = 0;
@@ -27,10 +26,17 @@ WHITE_SPACE=[\ \t\b\f]+|\r\n|\n
 %%
 
 <YYINITIAL, FUNC> {
-  {INCLUDE} { return (new Yytoken(1, yytext())); }
-  {FILENAME} { return (new Yytoken(2, yytext())); }
-  {FUNCTION}\(\) { return (new Yytoken(3, yytext())); }
-  {FUNCTION}\( {
+  {INCLUDE} {
+              yybegin(INC);
+              return (new Yytoken(1, yytext()));
+            }
+  "int"      { return (new Yytoken(19, yytext())); }
+  "double"   { return (new Yytoken(20, yytext())); }
+  "if"       { return (new Yytoken(21, yytext())); }
+  "return"   { return (new Yytoken(22, yytext())); }
+
+  {FUNCTION}\) { return (new Yytoken(3, yytext())); }
+  {FUNCTION} {
                 yybegin(FUNC);
                 return (new Yytoken(3, yytext() + ")"));
               }
@@ -47,10 +53,6 @@ WHITE_SPACE=[\ \t\b\f]+|\r\n|\n
   "<" { return (new Yytoken(16, yytext())); }
   ">" { return (new Yytoken(17, yytext())); }
   "=" { return (new Yytoken(18, yytext())); }
-  "int"      { return (new Yytoken(19, yytext())); }
-  "double"   { return (new Yytoken(20, yytext())); }
-  "if"       { return (new Yytoken(21, yytext())); }
-  "return"   { return (new Yytoken(22, yytext())); }
 
   {ID}  { return (new Yytoken(24, yytext())); }
   {DIGIT}+ { return (new Yytoken(23, yytext())); }
@@ -73,4 +75,13 @@ WHITE_SPACE=[\ \t\b\f]+|\r\n|\n
           }
         }
     . {   }
+}
+
+<INC> {
+  {FILENAME} {
+                yybegin(YYINITIAL);
+                return (new Yytoken(2, yytext()));
+              }
+  {WHITE_SPACE} {  }
+  . {   }
 }
