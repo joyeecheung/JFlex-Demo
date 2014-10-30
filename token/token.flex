@@ -13,8 +13,10 @@ STRING_TEXT=(\\\"|[^\n\r\"]|\\{WHITE_SPACE_CHAR}+\\)*
 WHITE_SPACE=[\ \t\b\f]+|\r\n|\n
 
 FILENAME=\<[^\>]+\>
-ID=[A-Za-z_]({ALPHA}|{DIGIT}|_)*
-FUNCTION={ID}\(
+IDFORM=[A-Za-z_]({ALPHA}|{DIGIT}|_)*
+KEYWORD=if|int|double|return
+ID=!(!{IDFORM}|{KEYWORD})
+FUNCTION={ID}{WHITE_SPACE}*\(
 NUMBER=DIGIT+
 
 %x FUNC INC
